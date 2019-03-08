@@ -26,7 +26,9 @@ def rounds(blocks):
             prev_block = L+R
         out += prev_block
     return out
-    
+
+def decrypt(cipher):
+    pass
 
 def main():
     try:
@@ -57,15 +59,16 @@ def main():
     elif len(text) % 8 != 0:
         text += [0] * (8 - (len(text) % 8))
 
-    print(text)
 
     blocks = [text[i:i+8] for i in range(0, len(text), 8)]
-    print(blocks)
 
     cipher = rounds(blocks)
-    print("-> Output:\n",cipher)
-    with open("out.cip", "wb+") as file:
-        file.write(bytes(cipher))
+    output = " "
+    for c in cipher:
+        output += str(c)
+        output += " "
+    with open("out.cip", "w+") as file:
+        file.write(output)
         file.flush()
 
 if __name__ == "__main__":
