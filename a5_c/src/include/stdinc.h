@@ -5,5 +5,4 @@
 #include "feistel.h"
 #include <stdlib.h>
 
-
 #endif // STDINC_H

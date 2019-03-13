@@ -10,11 +10,7 @@ int main() {
     print_section((byte*)key);
     printf("\n\n");
 
-    printf("Msg-> ");
-    print_block((block*)msg);
-    printf("Text-> ");
-    print_block_chars((block*)msg);
-    printf("\n");
+    debug_block((block*) msg);
 
     block *b = create_block_uchar((byte*) msg);
     //debug_block(b);
@@ -25,6 +21,17 @@ int main() {
         debug_block(b);
         free(old);
     }
+
+    
+    swap_sections(b);
+    for (int i = 8; i > 0; i--) {
+        block* old = b;
+        b = feistel_round(key, b, i);
+        debug_block(b);
+        free(old);    
+    }
+    swap_sections(b);
+    debug_block(b);
 
     return 1;
 }

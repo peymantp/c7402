@@ -77,8 +77,7 @@ void xor_sections(section lhs, section rhs, section dest) {
 
 byte function(const byte key_part, byte section_part, int i) {
     //byte res = (byte) pow(key_part * i * 2, section_part) % 15;
-    long res = (byte) mpow(key_part * 1 * 2, section_part, 15);
-    return res;
+    return (byte) mpow(key_part * 1 * 2, section_part, 49);
 }
 
 block* feistel_round(const byte* key, block *b, int i) {
@@ -88,7 +87,10 @@ block* feistel_round(const byte* key, block *b, int i) {
         byte  resf = function(key[j], right[j], i);
         left[j] = left[j] ^ resf;
     }
-    return create_block_uchar_uchar(right, left);
+    block* output = create_block_uchar_uchar(right, left);
+    free(left);
+    free(right);
+    return output;
 }
 
 long mpow(long base, long exp, long modulus) {
@@ -100,4 +102,12 @@ long mpow(long base, long exp, long modulus) {
     exp >>= 1;
   }
   return result;
+}
+
+void permute(const byte* data, byte* output) {
+
+}
+
+void generate_subkey(const byte* key) {
+
 }
