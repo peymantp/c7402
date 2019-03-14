@@ -3,10 +3,8 @@
 #include "cbc.h"
 #include "ecb.h"
 
-// ./feistel -e -m cbc -i feistel.c -o cipher -k abcd
-// ./feistel -d -m cbc -i cipher -o plain -k abcd
 
-#define INT_SIZE sizeof(unsigned int)        // Size of int in bytes
+#define INT_SIZE sizeof(unsigned int)    // Size of int in bytes
 #define INT_BITS ((INT_SIZE * 8) - 1)   // Size of int in bits - 1
 
 /**
@@ -30,6 +28,11 @@ unsigned int rotateLeft(unsigned int num, unsigned int rotation) {
     return num;
 }
 
+void usage(char* av) {
+    printf("[*] Usage:\n\t%s -e|d -m [ecb|cbc] -i <infile> -o <outfile> -k <4 char key>", av);
+}
+
+
 union int_chars {
 uint32_t a;
 char b[4];
@@ -46,14 +49,15 @@ int main(int argc, char *argv[]) {
 
     union int_chars key_gen;
     FILE *infile, *outfile;
-    /* Check argc */
-    if(argc < 10) {
-            fprintf(stderr,"You need more arguments!\n");
-            return EXIT_FAILURE;
+
+    if (argc == 1) {
+        usage(argv[0]);
+        exit(EXIT_FAILURE);
     }
 
+
     int c;
-    while( ( c = getopt (argc, argv, "k:i:o:edm:") ) != -1 )  {
+    while( ( c = getopt (argc, argv, "k:i:o:edhm:") ) != -1 )  {
         switch(c) {
         case 'k':
             if(optarg) {
@@ -97,6 +101,10 @@ int main(int argc, char *argv[]) {
         break;
         case 'd':
             do_decrypt = 1;
+        break;
+        case 'h':
+            usage(argv[0]);
+            exit(EXIT_FAILURE);
         break;
         case 'm':
             if(!strcmp(optarg,"ecb")){
@@ -152,7 +160,7 @@ int main(int argc, char *argv[]) {
             decrypt_cbc(infile,outfile,ROUNDS,keys);
         }
     }
-    /* Close files */
+
     fclose(infile);
     fclose(outfile);
     fprintf(stderr, "[*] Done!\n");
