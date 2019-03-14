@@ -78,7 +78,6 @@ int main(int argc, char** argv) {
     modified_blocks = (block**) malloc(sizeof(block) * nblocks);
     memset(modified_blocks, '\0', sizeof(block) * nblocks);
     
-    debug_block(blocks[0]);
 
     //subkey generation
     keys = (section*) malloc(sizeof(section) * nblocks);
@@ -86,10 +85,12 @@ int main(int argc, char** argv) {
     for (int i = 0; i < nblocks; i++){
         strncpy((char*)keys[i],(char*)key,8);
         per_my_mute(key);
+        debug_block(blocks[i]);
+        printf("\n");
     }
 
     if (do_encrypt) {
-        cout << "encrpting\n";
+        cout << "encrypting\n";
         encrpt(nblocks, blocks, modified_blocks, keys);
     }
 
@@ -110,6 +111,7 @@ int main(int argc, char** argv) {
 void encrpt(long nblocks, block** input, block** output, section* keys){
     for (int i = 0; i < nblocks; i++){
         output[i] = feistel_forward(input[i],keys[i]);
+        //debug_block(input[i]);
     }
     // for (int i = 0; i < nblocks; i++)
     //     debug_block(output[i]);
@@ -117,6 +119,7 @@ void encrpt(long nblocks, block** input, block** output, section* keys){
 
 void decrypt(long nblocks, block** input, block** output, section* keys){
     for (int i = nblocks-1; i > -1; i--){
+        //debug_block(input[i]);
         output[i] = feistel_backward(input[i],keys[i]);
     }
     // for (int i = 0; i < nblocks; i++)
