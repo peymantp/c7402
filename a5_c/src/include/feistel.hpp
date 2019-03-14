@@ -28,5 +28,6 @@ void xor_sections(section lhs, section rhs, section dest);
 byte function(const byte key_part, byte section_part, int i);
 block* feistel_round(const byte* key, block *b, int i);
 long mpow(long base, long exp, long modulus);
+void pad_message(byte* message, long size, long add);
 
 #endif // FEISTEL_H

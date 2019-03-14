@@ -1,4 +1,4 @@
-#include "include/feistel.h"
+#include "include/feistel.hpp"
 
 void swap_sections(block* b) {
     section tmp;
@@ -11,7 +11,7 @@ void swap_sections(block* b) {
 }
 
 block* create_block_uchar_uchar(byte* left, byte* right) {
-    block *out = malloc(sizeof(block));
+    block *out = (block*)malloc(sizeof(block));
     memset(out, '\0', 16);
     strncpy((char*)out->left, (char*)left, 8);
     strncpy((char*)out->right, (char*)right, 8);
@@ -19,20 +19,20 @@ block* create_block_uchar_uchar(byte* left, byte* right) {
 }
 
 block* create_block_uchar(byte* data) {
-    block *out = malloc(sizeof(block));
+    block *out = (block*)malloc(sizeof(block));
     memset(out, '\0', 16);
     strncpy((char*)out, (char*)data, 16);
     return out;
 }
 
 byte* get_left_section(block* b) {
-    byte* section = malloc(8);
+    byte* section = (byte*)malloc(8);
     strncpy((char*)section, (char*)b->left, 8);
     return section;
 }
 
 byte* get_right_section(block* b) {
-    byte* section = malloc(8);
+    byte* section = (byte*)malloc(8);
     strncpy((char*)section, (char*)b->right, 8);
     return section;
 }
@@ -103,7 +103,6 @@ long mpow(long base, long exp, long modulus) {
   }
   return result;
 }
-
 
 
 void permute(const byte* data, byte* output) {
