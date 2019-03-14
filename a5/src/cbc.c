@@ -3,7 +3,7 @@
 void encrypt_cbc(FILE *infile, FILE *outfile, uint32_t rounds, uint32_t keys[]) {
     uint32_t left, right;
     size_t ret;
-    uint64_t sblock, sblock_prev = 0xFEEDFACE;
+    uint64_t sblock, sblock_prev = 0xFFFFFFFF;
     while(!feof(infile)) {
         memset(&sblock,0,sizeof(sblock));
         ret = fread(&sblock,1,sizeof(sblock),infile);
@@ -32,7 +32,7 @@ void decrypt_cbc(FILE *infile, FILE *outfile, uint32_t rounds, uint32_t keys[]) 
         right = sblock & 0xFFFFFFFF;
         sblock = decrypt(left,right,ROUNDS,keys);
         if(first) {
-            sblock ^= 0xFEEDFACE;
+            sblock ^= 0xFFFFFFFF;
             first = 0;
         } else {
             sblock ^= sblock_prev;

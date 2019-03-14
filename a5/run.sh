@@ -9,6 +9,8 @@ if sh compile.sh; then
     rm outputs/*
 
     ./bin/feistel -e -m cbc -i src/feistel.c -o outputs/cipher_cbc -k abcd
+    echo ""
+    echo ""
     ./bin/feistel -d -m cbc -i outputs/cipher_cbc -o outputs/plain_cbc -k abcd
     
     echo ""
@@ -24,6 +26,8 @@ if sh compile.sh; then
     
     echo [*] running ecb
     ./bin/feistel -e -m ecb -i src/feistel.c -o outputs/cipher_ecb -k abcd
+    echo ""
+    echo ""
     ./bin/feistel -d -m ecb -i outputs/cipher_ecb -o outputs/plain_ecb -k abcd
 
     echo ""
@@ -33,7 +37,6 @@ if sh compile.sh; then
     else
         echo ""
     fi
-    echo ""
     echo ""
 else
     echo [*] Compilation failed!
