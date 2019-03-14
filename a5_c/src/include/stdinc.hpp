@@ -5,6 +5,7 @@
 #include "feistel.hpp"
 #include <stdlib.h>
 #include <algorithm>
-#include <
+#include <unistd.h>
+#include <cstdlib>
 
 #endif // STDINC_H

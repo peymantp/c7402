@@ -10,7 +10,7 @@ void swap_sections(block* b) {
     //printf("Saving tmp in right: %s\n", (char*)b->right);
 }
 
-block* create_block_uchar_uchar(byte* left, byte* right) {
+block* create_block_uchar_uchar(byte_t* left, byte_t* right) {
     block *out = (block*)malloc(sizeof(block));
     memset(out, '\0', 16);
     strncpy((char*)out->left, (char*)left, 8);
@@ -18,21 +18,21 @@ block* create_block_uchar_uchar(byte* left, byte* right) {
     return out;
 }
 
-block* create_block_uchar(byte* data) {
+block* create_block_uchar(byte_t* data) {
     block *out = (block*)malloc(sizeof(block));
     memset(out, '\0', 16);
     strncpy((char*)out, (char*)data, 16);
     return out;
 }
 
-byte* get_left_section(block* b) {
-    byte* section = (byte*)malloc(8);
+byte_t* get_left_section(block* b) {
+    byte_t* section = (byte_t*)malloc(8);
     strncpy((char*)section, (char*)b->left, 8);
     return section;
 }
 
-byte* get_right_section(block* b) {
-    byte* section = (byte*)malloc(8);
+byte_t* get_right_section(block* b) {
+    byte_t* section = (byte_t*)malloc(8);
     strncpy((char*)section, (char*)b->right, 8);
     return section;
 }
@@ -75,18 +75,19 @@ void xor_sections(section lhs, section rhs, section dest) {
     }
 }
 
-byte function(const byte key_part, byte section_part, int i) {
-    //byte res = (byte) pow(key_part * i * 2, section_part) % 15;
-    return (byte) mpow(key_part * 1 * 2, section_part, 49);
+byte_t function(const byte_t key_part, byte_t section_part, int i) {
+    //byte_t res = (byte_t) pow(key_part * i * 2, section_part) % 15;
+    return (byte_t) mpow(key_part * 1 * 2, section_part, 49);
 }
 
-block* feistel_round(const byte* key, block *b, int i) {
-    byte* left = get_left_section(b);
-    byte* right = get_right_section(b);
-    for(byte j = 0; j < 8; j++) {
-        byte  resf = function(key[j], right[j], i);
+block* feistel_round(const byte_t* key, block *b, int i) {
+    byte_t* left = get_left_section(b);
+    byte_t* right = get_right_section(b);
+    for(byte_t j = 0; j < 8; j++) {
+        byte_t  resf = function(key[j], right[j], i);
         left[j] = left[j] ^ resf;
     }
+    printf("\n");
     block* output = create_block_uchar_uchar(right, left);
     free(left);
     free(right);
@@ -105,10 +106,10 @@ long mpow(long base, long exp, long modulus) {
 }
 
 
-void permute(const byte* data, byte* output) {
+void permute(const byte_t* data, byte_t* output) {
     
 }
 
-void generate_subkey(const byte* key) {
+void generate_subkey(const byte_t* key) {
 
 }
