@@ -21,9 +21,8 @@ int main() {
         debug_block(b);
         free(old);
     }
-
-    
     swap_sections(b);
+
     for (int i = 8; i > 0; i--) {
         block* old = b;
         b = feistel_round(key, b, i);

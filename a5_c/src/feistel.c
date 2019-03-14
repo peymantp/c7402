@@ -104,8 +104,10 @@ long mpow(long base, long exp, long modulus) {
   return result;
 }
 
-void permute(const byte* data, byte* output) {
 
+
+void permute(const byte* data, byte* output) {
+    
 }
 
 void generate_subkey(const byte* key) {
