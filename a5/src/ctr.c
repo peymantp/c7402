@@ -1,6 +1,5 @@
 #include "ctr.h"
 
-
 void encrypt_ctr(FILE *infile, FILE *outfile, uint32_t rounds, uint32_t keys[]) {
     srand(keys[0]); // make the nonce based on supplied key
     uint64_t nonce = rand() % (1024);
