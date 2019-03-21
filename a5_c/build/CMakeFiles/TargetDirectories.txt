@@ -1,3 +1,0 @@
-/run/media/peymon/Slow/Code/c7402/a5_c/build/CMakeFiles/rebuild_cache.dir
-/run/media/peymon/Slow/Code/c7402/a5_c/build/CMakeFiles/feistel.dir
-/run/media/peymon/Slow/Code/c7402/a5_c/build/CMakeFiles/edit_cache.dir
