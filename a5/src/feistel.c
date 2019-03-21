@@ -2,6 +2,7 @@
 #include <getopt.h>
 #include "cbc.h"
 #include "ecb.h"
+#include "ctr.h"
 
 
 #define INT_SIZE sizeof(unsigned int)    // Size of int in bytes
@@ -45,6 +46,7 @@ int main(int argc, char *argv[]) {
     int do_decrypt = 0;
     int do_ecb = 0;
     int do_cbc = 0;
+    int do_ctr = 0;
     int key_set = 0;
 
     union int_chars key_gen;
@@ -111,6 +113,8 @@ int main(int argc, char *argv[]) {
                 do_ecb = 1;
             } else if (!strcmp(optarg,"cbc")){
                 do_cbc = 1;
+            } else if (!strcmp(optarg, "ctr")) {
+                do_ctr = 1;
             } else {
                 fprintf(stderr,"Invalid mode '%s'\n",optarg);
             }
@@ -133,11 +137,11 @@ int main(int argc, char *argv[]) {
         printf("You need to provide a key with -k and the key should be of 8 bytes in length!\n");
         exit(EXIT_FAILURE);
     }
-    if (do_cbc && do_ecb) {
-        printf("You Cannot do cbc and ecb at the same time!\n");
+    if ((do_cbc + do_ctr + do_ecb) > 1) {
+        printf("You Cannot do multiple operations at the same time!\n");
         exit(EXIT_FAILURE);
-    }else if (!do_cbc && !do_ecb) {
-        printf("You have to set ecb or cbc under the -m param!\n");
+    }else if ((do_cbc + do_ctr + do_ecb) == 0) {
+        printf("You have to set ecb, cbc or ctr under the -m param!\n");
         exit(EXIT_FAILURE);
     }
 
@@ -149,6 +153,9 @@ int main(int argc, char *argv[]) {
         } else if (do_cbc){
             printf("cbc \n");
             encrypt_cbc(infile,outfile,ROUNDS,keys);
+        } else if (do_ctr) {
+            printf("ctr\n");
+            encrypt_ctr(infile, outfile, ROUNDS, keys);
         }
     } else if (do_decrypt) {
         printf("[*] decrypting with: ");
@@ -158,6 +165,9 @@ int main(int argc, char *argv[]) {
         } else if (do_cbc){
             printf("cbc \n");
             decrypt_cbc(infile,outfile,ROUNDS,keys);
+        }else if (do_ctr) {
+            printf("ctr\n");
+            decrypt_ctr(infile, outfile, ROUNDS, keys);
         }
     }
 
