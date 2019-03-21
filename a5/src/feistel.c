@@ -30,7 +30,7 @@ unsigned int rotateLeft(unsigned int num, unsigned int rotation) {
 }
 
 void usage(char* av) {
-    printf("[*] Usage:\n\t%s -e|d -m [ecb|cbc] -i <infile> -o <outfile> -k <4 char key>", av);
+    printf("[*] Usage:\n\t%s -e|d -m [ecb|cbc|ctr] -i <infile> -o <outfile> -k <4 char key>", av);
 }
 
 
@@ -122,6 +122,7 @@ int main(int argc, char *argv[]) {
         }
     }
 
+    //Error checking
     if (do_encrypt && do_decrypt) {
         printf("You can't encrypt and decrypt the data at the same time!\n");
         exit(EXIT_FAILURE);
@@ -145,6 +146,7 @@ int main(int argc, char *argv[]) {
         exit(EXIT_FAILURE);
     }
 
+    //Encrypt & Decrypt
     if (do_encrypt) {
         printf("[*] encrypting with: ");
         if(do_ecb){

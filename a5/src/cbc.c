@@ -5,9 +5,11 @@ void encrypt_cbc(FILE *infile, FILE *outfile, uint32_t rounds, uint32_t keys[]) 
     size_t ret;
     uint64_t sblock, sblock_prev = 0xFFFFFFFF;
     while(!feof(infile)) {
+        // read data
         memset(&sblock,0,sizeof(sblock));
         ret = fread(&sblock,1,sizeof(sblock),infile);
         if(!ret) break;
+        
         sblock ^= sblock_prev;
         left = (sblock>>32) & 0xFFFFFFFF;
         right = sblock & 0xFFFFFFFF;

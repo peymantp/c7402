@@ -15,14 +15,9 @@ if sh compile.sh; then
     
     echo ""
     echo [*] checking for differences
-    if cmp outputs/plain_cbc src/feistel.c ; then
-        echo ""
-    else
-        echo ""
-    fi
+    cmp outputs/plain_cbc src/feistel.c
     echo ""
     echo ""
-    
     
     echo [*] running ecb
     ./bin/feistel -e -m ecb -i src/feistel.c -o outputs/cipher_ecb -k abcd
@@ -32,11 +27,20 @@ if sh compile.sh; then
 
     echo ""
     echo [*] checking for differences
-    if cmp outputs/plain_ecb src/feistel.c ; then
-        echo ""
-    else
-        echo ""
-    fi
+    cmp outputs/plain_ecb src/feistel.c
+
+    echo ""
+
+    echo [*] running ctr
+    ./bin/feistel -e -m ctr -i src/feistel.c -o outputs/cipher_ctr -k abcd
+    echo ""
+    echo ""
+    ./bin/feistel -d -m ctr -i outputs/cipher_ctr -o outputs/plain_ctr -k abcd
+
+    echo ""
+    echo [*] checking for differences
+    cmp outputs/plain_ctr src/feistel.c
+    
     echo ""
 else
     echo [*] Compilation failed!
