@@ -27,7 +27,7 @@ if sh compile.sh; then
 
     echo ""
     echo [*] checking for differences
-    if cmp outputs/plain_ecb src/feistel.c
+    cmp outputs/plain_ecb src/feistel.c
 
     echo ""
 
@@ -39,7 +39,7 @@ if sh compile.sh; then
 
     echo ""
     echo [*] checking for differences
-    if cmp outputs/plain_ctr src/feistel.c
+    cmp outputs/plain_ctr src/feistel.c
     
     echo ""
 else
